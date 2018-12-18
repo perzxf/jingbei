@@ -1,0 +1,15 @@
+server:
+  port: 8180
+spring:
+  application:
+    name: cloudfeign
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.116:8088/eureka

@@ -1,0 +1,27 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: cloudprovider
+  datasource:
+    url: jdbc:mysql://192.168.1.116:3306/jingbei?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #最大活跃数
+      max-active: 20
+      #初始化数量
+      initial-size: 1
+      #最大连接等待超时时间
+      max-wait: 60000
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
+eureka:
+  client:
+    service-url:
+      #当前生产者注册地址 （注册中心地址）
+      defaultZone: http://192.168.1.116:8088/eureka
+
