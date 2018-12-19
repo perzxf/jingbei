@@ -1,7 +1,10 @@
 package com.jb.controller;
 
+import com.jb.model.CustomMadePr;
 import com.jb.model.TestBean;
 import com.jb.service.JingBeiApiService;
+import com.jb.util.PageResult;
+import com.jb.util.PageUtilEasyui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +25,12 @@ public class JingBeiController {
     @ResponseBody
     public List<TestBean> queryTest(){
         return jingBeiApiService.queryTest();
+    }
+
+    @RequestMapping("queryPbpaPageList")
+    @ResponseBody
+    public PageResult queryPbpaPageList(PageUtilEasyui<CustomMadePr> pageUtilEasyui, CustomMadePr customMadePr){
+        pageUtilEasyui.setT(customMadePr);
+        return jingBeiApiService.queryPbpaPageList(pageUtilEasyui);
     }
 }

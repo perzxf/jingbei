@@ -5,4 +5,31 @@
     <select id="queryTest" resultType="com.jb.model.TestBean">
         select * from t_test
     </select>
+    <select id="queryCustomMadePrPageCount" parameterType="map" resultType="int">
+        select count(*)
+            from custom_made_pr cmp
+            LEFT JOIN t_type tt on cmp.type_id=tt.id
+            LEFT JOIN bill_of_materials bom on cmp.bill_of_materials_id=bom.id
+            LEFT JOIN t_channel tc on bom.channel_id=tc.id where 1 = 1
+            <include refid="CustomMadePrWhere"></include>
+    </select>
+
+    <select id="queryCustomMadePrPageList" parameterType="map" resultType="com.jb.model.CustomMadePr">
+        select cmp.id,bom.`name` as bomName,tt.`name` as ttName,cmp.time,tc.`name` as tcName,cmp.order_size as orderSize
+            from custom_made_pr cmp
+            LEFT JOIN t_type tt on cmp.type_id=tt.id
+            LEFT JOIN bill_of_materials bom on cmp.bill_of_materials_id=bom.id
+            LEFT JOIN t_channel tc on bom.channel_id=tc.id where 1 = 1
+            <include refid="CustomMadePrWhere"></include>
+            LIMIT #{startIndex,jdbcType=NUMERIC},#{rows,jdbcType=NUMERIC}
+    </select>
+
+    <sql id="CustomMadePrWhere">
+        <if test="customMadePr.bomName != null and customMadePr.bomName != ''">
+            and bom.name like '%${customMadePr.bomName}%'
+        </if>
+        <if test="customMadePr.tcId != null and customMadePr.tcId != ''">
+            and tc.id = #{customMadePr.tcId}
+        </if>
+    </sql>
 </mapper>
