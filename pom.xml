@@ -13,6 +13,14 @@
         <module>jingbeieureka</module>
         <module>jingbeifeign</module>
         <module>jingbeiprovider</module>
+        <module>jingbeiserviceapi</module>
+        <module>jingbeirabbitcos</module>
+        <module>jingbeirabbitpri</module>
+        <module>buyerserviceapi</module>
+        <module>buyerprovider</module>
+        <module>buyerfeign</module>
+        <module>buyerrabbitcos</module>
+        <module>buyerrabbitpri</module>
     </modules>
 
 
