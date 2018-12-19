@@ -1,5 +1,6 @@
 package com.jb.controller;
 
+import com.jb.model.BillOfMaterials;
 import com.jb.model.TestBean;
 import com.jb.service.JingBeiApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,16 @@ public class JingBeiController {
     public List<TestBean> queryTest(){
         return jingBeiApiService.queryTest();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.jb.controller;
 
+import com.jb.model.BillOfMaterials;
 import com.jb.model.TestBean;
 import com.jb.service.JingBeiApiService;
 import com.jb.service.JingBeiService;
@@ -21,4 +22,5 @@ public class JingBeiController implements JingBeiApiService {
     public List<TestBean> queryTest() {
         return jingBeiService.queryTest();
     }
+
 }

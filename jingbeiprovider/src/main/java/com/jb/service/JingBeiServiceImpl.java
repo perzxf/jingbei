@@ -1,6 +1,7 @@
 package com.jb.service;
 
 import com.jb.mapper.JingBeiMapper;
+import com.jb.model.BillOfMaterials;
 import com.jb.model.TestBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
