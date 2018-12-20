@@ -5,4 +5,34 @@
     <select id="queryTest" resultType="com.jb.model.TestBean">
         select * from t_test
     </select>
+
+    <insert id="addFolder" parameterType="com.jb.model.SuppiyFacilitator" >
+        insert into suppiy_facilitator(xiangmuid,xiangname,text) values
+				(#{xiangmuid},#{xiangname},#{text})
+    </insert>
+
+    <delete id="deleteSuppiy" parameterType="com.jb.model.SuppiyFacilitator">
+     delete from suppiy_facilitator where xiangmuid = #{xiangmuid}
+    </delete>
+
+    <select id="queryCustomMadePrCount" parameterType="map" resultType="int">
+        select count(*)
+            from custom_made_pr cmp
+            LEFT JOIN t_type tt on cmp.type_id=tt.id
+            LEFT JOIN bill_of_materials bom on cmp.bill_of_materials_id=bom.id
+            LEFT JOIN t_channel tc on bom.channel_id=tc.id where 1 = 1
+
+    </select>
+
+    <select id="queryCustomMadePrList" parameterType="map" resultType="com.jb.model.CustomMadePr">
+        select cmp.id,bom.`name` as bomName,tt.`name` as ttName,cmp.time,tc.`name` as tcName,cmp.order_size as orderSize
+            from custom_made_pr cmp
+            LEFT JOIN t_type tt on cmp.type_id=tt.id
+            LEFT JOIN bill_of_materials bom on cmp.bill_of_materials_id=bom.id
+            LEFT JOIN t_channel tc on bom.channel_id=tc.id where 1 = 1
+
+            LIMIT #{startIndex,jdbcType=NUMERIC},#{rows,jdbcType=NUMERIC}
+    </select>
+
+
 </mapper>

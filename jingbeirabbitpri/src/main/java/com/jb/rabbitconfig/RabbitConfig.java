@@ -13,4 +13,12 @@ public class RabbitConfig {
         //参数为队列名称
         return new Queue("myqueue");
     }
+
+    @Bean//创建一个rabbitMq队列
+        //@Bean 声明当前方法为bean实例方法 把返回值注入到spring环境中
+    public Queue deleteMessages() {
+        //参数为队列名称
+        return new Queue("deleSuppiy");
+    }
+
 }
