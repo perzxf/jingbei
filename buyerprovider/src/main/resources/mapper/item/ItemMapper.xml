@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jb.mapper.item.ItemMapper">
+    <select id="queryitemCount" parameterType="map" resultType="int">
+      select count(1)
+from t_item_enquiry tie
+LEFT JOIN t_item ti on tie.item_name_id = ti.item_id
+LEFT JOIN t_channel_eg tce on tie.item_channel_id = tce.channel_id
+where 1=1
+<include refid="itemWhere"></include>
+    </select>
+    <select id="queryitemList" parameterType="map" resultType="com.jb.model.item.PageBean">
+     select tie.item_coding as itemCoding,ti.item_name as itemName ,
+    tie.item_startime as itemStartime ,tie.item_endtime as itemEndtime ,
+    tie.item_participation_count as itemParticipationCount ,
+    tce.channel_name as itemChannel , tie.item_status as itemStatus
+    from t_item_enquiry tie
+    LEFT JOIN t_item ti on tie.item_name_id = ti.item_id
+    LEFT JOIN t_channel_eg tce on tie.item_channel_id = tce.channel_id
+    where 1=1
+        <include refid="itemWhere"></include>
+            LIMIT #{startIndex},#{endIndex}
+    </select>
+    <sql id="itemWhere">
+        <if test="pageBean.itemChannelId !=null and pageBean.itemChannelId != ''">
+              and tie.item_channel_id = #{pageBean.itemChannelId}
+        </if>
+        <if test="pageBean.itemStatus !=null and pageBean.itemStatus!=''">
+            and tie.item_status = #{pageBean.itemStatus}
+        </if>
+        <if test="pageBean.itemStartime !=null and pageBean.itemStartime!=''">
+            and tie.item_startime >=#{pageBean.itemStartime}
+        </if>
+        <if test="pageBean.itemEndtime !=null and pageBean.itemEndtime!=''">
+            and tie.item_endtime &lt;=#{pageBean.itemEndtime}
+        </if>
+        <if test="pageBean.itemName !=null and pageBean.itemName !=''">
+            and tce.channel_name  like '%${pageBean.itemName}%'
+        </if>
+    </sql>
+
+    <select id="queryTChannelEg" resultType="com.jb.model.item.TChannelEg">
+            select t.channel_id as channelId,t.channel_name as channelName from t_channel_eg t
+    </select>
+
+    <select id="queryCategories" parameterType="String" resultType="com.jb.model.item.CustomizedProductCategories">
+      select cpc.id as id ,cpc.pid as pid,cpc.type_name as typeName from customized_product_categories cpc  where pid = #{value}
+    </select>
+</mapper>
