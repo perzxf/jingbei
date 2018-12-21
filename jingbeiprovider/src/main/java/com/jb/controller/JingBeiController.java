@@ -1,6 +1,8 @@
 package com.jb.controller;
 
 import com.jb.model.CustomMadePr;
+import com.jb.model.CustomizedProductInformation;
+import com.jb.model.InquiryList;
 import com.jb.model.TestBean;
 import com.jb.service.JingBeiApiService;
 import com.jb.service.JingBeiService;
@@ -29,5 +31,15 @@ public class JingBeiController implements JingBeiApiService {
     @Override
     public PageResult queryPbpaPageList(@RequestBody PageUtilEasyui<CustomMadePr> pageUtilEasyui) {
         return jingBeiService.queryPbpaPageList(pageUtilEasyui);
+    }
+
+    @Override
+    public InquiryList queryInquiryList(@RequestBody InquiryList inquiryList) {
+        return jingBeiService.queryInquiryList(inquiryList);
+    }
+
+    @Override
+    public CustomizedProductInformation queryCustomizedProductInformation(@RequestBody CustomizedProductInformation cpi) {
+        return jingBeiService.queryCustomizedProductInformation(cpi);
     }
 }

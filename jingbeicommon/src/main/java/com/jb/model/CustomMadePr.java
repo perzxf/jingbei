@@ -13,6 +13,42 @@ public class CustomMadePr {
   private String ttName; //状态
   private String tcName; //渠道名称
   private String tcId; //渠道ID
+  private String materialId; //物料Id
+  private String serviceId; //服务报价Id
+  private String annexId; //附件id
+  private Integer status; //状态 （买家1 卖家2 服务商3）
+
+  public Integer getStatus() {
+    return status;
+  }
+
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
+
+  public String getMaterialId() {
+    return materialId;
+  }
+
+  public void setMaterialId(String materialId) {
+    this.materialId = materialId;
+  }
+
+  public String getServiceId() {
+    return serviceId;
+  }
+
+  public void setServiceId(String serviceId) {
+    this.serviceId = serviceId;
+  }
+
+  public String getAnnexId() {
+    return annexId;
+  }
+
+  public void setAnnexId(String annexId) {
+    this.annexId = annexId;
+  }
 
   public String getTcId() {
     return tcId;

@@ -1,6 +1,8 @@
 package com.jb.service;
 
 import com.jb.model.CustomMadePr;
+import com.jb.model.CustomizedProductInformation;
+import com.jb.model.InquiryList;
 import com.jb.model.TestBean;
 import com.jb.util.PageResult;
 import com.jb.util.PageUtilEasyui;
@@ -26,4 +28,15 @@ public interface JingBeiApiService {
     @RequestMapping("queryPbpaPageListInfo")
     PageResult queryPbpaPageList(PageUtilEasyui<CustomMadePr> pageUtilEasyui);
 
+    /**
+     * 项目详情页询价单 D-1-1
+     */
+    @RequestMapping("queryInquiryListInfo")
+    InquiryList queryInquiryList(InquiryList inquiryList);
+
+    /**
+     * 项目详情页定制产品信息 D-1-1
+     */
+    @RequestMapping("queryCustomizedProductInformationInfo")
+    CustomizedProductInformation queryCustomizedProductInformation(CustomizedProductInformation cpi);
 }

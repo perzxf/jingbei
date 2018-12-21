@@ -2,6 +2,8 @@ package com.jb.service;
 
 import com.jb.mapper.JingBeiMapper;
 import com.jb.model.CustomMadePr;
+import com.jb.model.CustomizedProductInformation;
+import com.jb.model.InquiryList;
 import com.jb.model.TestBean;
 import com.jb.util.PageResult;
 import com.jb.util.PageUtilEasyui;
@@ -44,5 +46,15 @@ public class JingBeiServiceImpl implements JingBeiService {
         //将查询出来的list放到总返回体重
         pageResult.setRows(list);
         return pageResult;
+    }
+
+    @Override
+    public InquiryList queryInquiryList(InquiryList inquiryList) {
+        return jingBeiMapper.queryInquiryList(inquiryList);
+    }
+
+    @Override
+    public CustomizedProductInformation queryCustomizedProductInformation(CustomizedProductInformation cpi) {
+        return jingBeiMapper.queryCustomizedProductInformation(cpi);
     }
 }
