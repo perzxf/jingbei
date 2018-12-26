@@ -4,17 +4,14 @@ spring:
   application:
     name: cloudprovider
   datasource:
-    url: jdbc:mysql://192.168.1.104:3306/jingbei?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.1.150:3306/jingbei?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      #����Ծ��
       max-active: 20
-      #��ʼ������
       initial-size: 1
-      #������ӵȴ���ʱʱ��
       max-wait: 60000
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 mybatis:
@@ -22,6 +19,5 @@ mybatis:
 eureka:
   client:
     service-url:
-      #��ǰ������ע���ַ ��ע�����ĵ�ַ��
-      defaultZone: http://192.168.1.104:8088/eureka
+      defaultZone: http://192.168.1.150:8088/eureka
 
