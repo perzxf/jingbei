@@ -3,28 +3,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jb.mapper.item.ItemMapper">
     <select id="queryitemCount" parameterType="map" resultType="int">
-      select count(1)
-from t_item_enquiry tie
-LEFT JOIN t_item ti on tie.item_name_id = ti.item_id
-LEFT JOIN t_channel_eg tce on tie.item_channel_id = tce.channel_id
-where 1=1
-<include refid="itemWhere"></include>
-    </select>
-    <select id="queryitemList" parameterType="map" resultType="com.jb.model.item.PageBean">
-     select tie.item_coding as itemCoding,ti.item_name as itemName ,
-    tie.item_startime as itemStartime ,tie.item_endtime as itemEndtime ,
-    tie.item_participation_count as itemParticipationCount ,
-    tce.channel_name as itemChannel , tie.item_status as itemStatus
-    from t_item_enquiry tie
-    LEFT JOIN t_item ti on tie.item_name_id = ti.item_id
-    LEFT JOIN t_channel_eg tce on tie.item_channel_id = tce.channel_id
-    where 1=1
-        <include refid="itemWhere"></include>
+        select count(*) from custom_made_pr c
+        left join bill_of_materials b on c.bill_of_materials_id = b.id
+        left join t_channel n on b.channel_id = n.id
+        where c.`status` = 1
+     </select>
+    <select id="queryitemList" parameterType="map" resultType="com.jb.model.CustomMadePr">
+        select
+        c.annex_id as annexId,
+        c.bill_of_materials_id as billOfMaterialsId,
+        c.id as id,
+        c.material_id as materialId,
+        c.order_size as orderSize,
+        c.service_id as serviceId,
+        c.`status` as status,
+        c.time as time,
+        c.item_star_status as itemstarstatus,
+        c.startime as startime,
+        c.type_id as typeId,
+        b.`name`as bomName,
+        b.time as billTime,
+        b.channel_id as tcId,
+        n.`name` as tcName
+        from
+        custom_made_pr c
+        left join bill_of_materials b on c.bill_of_materials_id = b.id
+        left join t_channel n on b.channel_id = n.id
+        where c.`status` = 1
             LIMIT #{startIndex},#{endIndex}
     </select>
     <sql id="itemWhere">
-        <if test="pageBean.itemChannelId !=null and pageBean.itemChannelId != ''">
-              and tie.item_channel_id = #{pageBean.itemChannelId}
+        <if test="pageBean.tcId !=null and pageBean.tcId != ''">
+              and tie.item_channel_id = #{pageBean.tcId}
         </if>
         <if test="pageBean.itemStatus !=null and pageBean.itemStatus!=''">
             and tie.item_status = #{pageBean.itemStatus}
@@ -35,16 +45,66 @@ where 1=1
         <if test="pageBean.itemEndtime !=null and pageBean.itemEndtime!=''">
             and tie.item_endtime &lt;=#{pageBean.itemEndtime}
         </if>
-        <if test="pageBean.itemName !=null and pageBean.itemName !=''">
-            and tce.channel_name  like '%${pageBean.itemName}%'
-        </if>
     </sql>
 
-    <select id="queryTChannelEg" resultType="com.jb.model.item.TChannelEg">
-            select t.channel_id as channelId,t.channel_name as channelName from t_channel_eg t
+    <select id="queryTChannelEg" resultType="com.jb.model.item.TChannel">
+            select t.id ,t.name from t_channel t
     </select>
 
     <select id="queryCategories" parameterType="String" resultType="com.jb.model.item.CustomizedProductCategories">
       select cpc.id as id ,cpc.pid as pid,cpc.type_name as typeName from customized_product_categories cpc  where pid = #{value}
     </select>
+    <select id="querymaterialsCount" parameterType="map" resultType="int">
+           select  count(1) from t_materials tm
+LEFT JOIN t_item ti on tm.materials_name_id = ti.item_id
+LEFT JOIN t_channel_eg tce on tm.materials_channel_id = tce.channel_id
+        where 1=1
+    </select>
+    <select id="querymaterialsList" parameterType="map" resultType="com.jb.model.TMaterial">
+        select
+            c.annex_id as annexId,
+            c.bill_of_materials_id as billOfMaterialsId,
+            c.id as id,
+            c.material_id as materialId,
+            c.order_size as orderSize,
+            c.service_id as serviceId,
+            c.`status` as status,
+            c.time as time,
+            c.type_id as typeId,
+            c.item_star_status as itemstarstatus,
+            b.`name`as bomName,
+            b.time as billTime,
+            b.channel_id as tcId,
+            n.`name` as tcName,
+            m.brand as brand,
+            m.category as category,
+            m.count as count,
+            m.materialname as materialname,
+            m.materialnumber as materialnumber,
+            m.unitprice as unitprice,
+            s.`name` as name,
+            s.price as price
+          from
+        custom_made_pr c
+        left join bill_of_materials b on c.bill_of_materials_id = b.id
+        left join t_channel n on b.channel_id = n.id
+		left join t_material m on c.material_id = m.custom_made_pr_id
+        left join t_service_quotation s on c.service_id = s.custom_made_pr_id
+        where m.custom_made_pr_id = ${value}
+        group by m.id
+            LIMIT #{startIndex},#{endIndex}
+    </select>
+    <sql id="materialsWhere">
+        <if test="tMaterials.materialsChannelId !=null and tMaterials.materialsChannelId !=''">
+            and tm.materials_channel_id = #{tMaterials.materialsChannelId}
+        </if>
+    </sql>
+    <select id="queryTSuppliesById" parameterType="String" resultType="com.jb.model.item.TSupplies">
+      select ts.t_supplies_count as tSuppliesCount,ts.t_supplies_id as tSuppliesId,ts.t_supplies_name as tSuppliesName,ts.t_supplies_names as tSuppliesNames,ts.t_type_id as tTypeId,tst.t_supplies_type_name as tTypeName  from t_supplies ts
+      LEFT JOIN t_supplies_type tst on ts.t_type_id = tst.t_supplies_type_id
+      where ts.t_supplies_id = #{value}
+    </select>
+    <update id="updatestarStatus" parameterType="com.jb.model.CustomMadePr" >
+         update custom_made_pr set item_star_status = 3 where id =  #{id}
+    </update>
 </mapper>

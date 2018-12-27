@@ -12,6 +12,16 @@ public class TItemEnquiry {
   private String itemChannelId;
   private String itemChannel;
   private int itemStatus;
+  private int itemstarstatus;
+
+
+  public int getItemstarstatus() {
+    return itemstarstatus;
+  }
+
+  public void setItemstarstatus(int itemstarstatus) {
+    this.itemstarstatus = itemstarstatus;
+  }
 
   public String getItemName() {
     return itemName;

@@ -9,7 +9,7 @@ spring:
   application:
     name: buyercloudprovider
   datasource:
-    url: jdbc:mysql://192.168.1.116:3306/jingbei?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.1.150:3306/jingbei?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -24,5 +24,5 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.1.116:8088/eureka
+      defaultZone: http://192.168.1.150:8088/eureka
 
